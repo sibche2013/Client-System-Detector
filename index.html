@@ -181,5 +181,94 @@
 <button class="button" onclick="history.back();">← Back To Previous Page</button>
 
 <script src="Browser&OsDetection.js"></script>
+    <div class="floating-nav-container">
+    <a href="https://demo.aminarjmand.com" class="floating-btn btn-back-home" title="برگشت به داشبورد / Back to Dashboard">
+        🏠 <span class="nav-text">صفحه مخازن</span>
+    </a>
+    <a href="#" id="dynamic-github-btn" target="_blank" class="floating-btn btn-github-repo" title="مشاهده مخزن گیت‌هاب / View GitHub Repo">
+        🐙 <span class="nav-text">گیت‌هاب مخزن</span>
+    </a>
+</div>
+
+<style>
+    /* استایل دکمه‌های شناور */
+    .floating-nav-container {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 99999;
+        direction: rtl; /* برای هماهنگی متن فارسی */
+    }
+
+    .floating-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 50px;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 0.85rem;
+        font-weight: bold;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn-back-home {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-github-repo {
+        background: linear-gradient(135deg, #24292e, #4c5157);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* افکت هوور */
+    .floating-btn:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* واکنش‌گرایی برای موبایل (مخفی کردن متن برای شلوغ نشدن صفحه) */
+    @media (max-width: 480px) {
+        .floating-nav-container {
+            bottom: 15px;
+            left: 15px;
+            gap: 8px;
+        }
+        .floating-btn {
+            padding: 12px;
+            border-radius: 50%;
+        }
+        .floating-btn .nav-text {
+            display: none; /* در موبایل فقط آیکون‌ها نمایش داده می‌شوند */
+        }
+    }
+</style>
+
+<script>
+    // اسکریپت هوشمند برای تشخیص خودکار نام مخزن و ساخت لینک گیت‌هاب
+    (function() {
+        const pathSegments = window.location.pathname.split('/').filter(segment => segment !== "");
+        
+        // اگر پروژه در ساب‌فولدر بود نام آن را می‌گیرد، در غیر این صورت نام پیش‌فرض را خالی می‌گذارد
+        const repoName = pathSegments.length > 0 ? pathSegments[0] : "";
+        
+        const githubBtn = document.getElementById('dynamic-github-btn');
+        
+        if (repoName) {
+            // ساخت اتوماتیک لینک گیت‌هاب با هماهنگی دامین دمو
+            githubBtn.href = "https://github.com/sibche2013/" + repoName;
+        } else {
+            // اگر به هر دلیلی در روت اصلی دمو بود، به پروفایل گیت‌هاب لینک می‌شود
+            githubBtn.href = "https://github.com/sibche2013";
+        }
+    })();
+</script>
 </body>
 </html>
